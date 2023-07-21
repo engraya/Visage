@@ -1,18 +1,122 @@
-{% extends "main/header.html" %}
+{% extends 'base/main.html' %}
 
-{% block content %} 
 
-{% load crispy_forms_tags %}         
 
-<!--Register--> 
-<div class="container py-5">
-	<h1>Register</h1>
-	<form method="POST">
-		{% csrf_token %}
-		{{ register_form|crispy }}                    
-		<button class="btn btn-primary" type="submit">Register</button>
-	</form>
-	<p class="text-center">If you already have an account, <a href="/login">login</a> instead.</p>
+{% block content  %}
+<style>
+    body{
+        background-color: #1A233A;
+        margin-top:20px;
+    }
+    .card {
+        margin-bottom: 1.5rem;
+        box-shadow: 0 1px 15px 1px rgba(52,40,104,.08);
+    }
+    
+    .card {
+        position: relative;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 1px solid #e5e9f2;
+        border-radius: .2rem;
+    }
+    .social-btn {
+        display: inline-block;
+        width: 2.25rem;
+        height: 2.25rem;
+        -webkit-transition: border-color 0.25s ease-in-out,background-color 0.25s ease-in-out,color 0.25s ease-in-out;
+        transition: border-color 0.25s ease-in-out,background-color 0.25s ease-in-out,color 0.25s ease-in-out;
+        border: 1px solid #e7e7e7;
+        border-radius: 50%;
+        background-color: #fff;
+        color: #545454;
+        text-align: center;
+        text-decoration: none;
+        line-height: 2.125rem;
+        vertical-align: middle;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+
+<div class="container h-100">
+    <div class="row h-100">
+        <div class="col-sm-10 col-md-8 col-lg-6 mx-auto d-table h-100">
+            <div class="d-table-cell align-middle">
+                <div class="text-center mt-4">
+                    <h1 class="h2">Create an Account</h1>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="m-sm-4">
+                            <div class="text-center aligned center items-center mt-4 my-5 aligned-items-center">
+                                <style>
+                                    h5{
+                                        color: darkgreen;
+                                    }
+                                </style>
+                                {% for message in messages %}
+                                    <h5>{{message}}</h5>
+                                {% endfor %}
+                            </div>
+                            <form method="POST">
+                                {% csrf_token %}
+                                <div class="form-group p-2">
+                                    <label>First Name</label>
+                                    <!-- <input class="form-control form-control-lg" type="text" name="first_name" placeholder="Enter your First Name"> -->
+                                    {{form.first_name}}
+                                </div>
+                                <div class="form-group p-2">
+                                    <label>Last Name</label>
+                                    <!-- <input class="form-control form-control-lg" type="text" name="last_name" placeholder="Enter your Last Name"> -->
+                                    {{form.last_name}}
+                                </div>
+                                <div class="form-group p-2">
+                                    <label>Email</label>
+                                    <!-- <input class="form-control form-control-lg" type="email" name="email" placeholder="Enter your Email"> -->
+                                    {{form.email}}
+                                </div>
+                                <div class="form-group p-2">
+                                    <label>Username</label>
+                                    <!-- <input class="form-control form-control-lg" type="text" name="username" placeholder="Enter your Username"> -->
+                                    {{form.username}}
+                                </div>
+                                <div class="form-group p-2">
+                                    <label>Password</label>
+                                    <!-- <input class="form-control form-control-lg" type="password" name="password1" placeholder="Enter your password"> -->
+                                    {{form.password1}}
+                                </div>
+                                <div class="form-group p-2">
+                                    <label>Confirm Password</label>
+                                    <!-- <input class="form-control form-control-lg" type="password" name="password2" placeholder="Confirm your password"> -->
+                                    {{form.password2}}
+                                </div>
+
+                                <div class="text-center mt-3">
+                                    <button type="submit" class="btn btn-md btn-success">Sign Up</button>
+                                </div>
+                            </form>
+                            <hr>            
+                            <div class="text-center mt-4">
+                                <h5>Already Have an Account?</h5>
+                            </div>
+                            <div class="text-center mt-3">
+                                <a href="{% url 'login' %}" class="btn btn-md btn-primary">Sign In</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
 
-{% endblock %}
+{% endblock content %}
+    

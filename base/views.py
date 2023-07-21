@@ -1,7 +1,13 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm, UserLoginForm
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, logout, authenticate
+from django.contrib import messages
+
+
+
+
 
 def index(request):
     return render(request, 'base/index.html')
@@ -22,7 +28,7 @@ def signUp(request):
 
 def signIn(request):
     if request.method == "POST":
-	    form = AuthenticationForm(request, request.POST)
+	    form = UserLoginForm(request, request.POST)
 	    if form.is_valid():
 		    username = form.cleaned_data.get('username')
 		    password = form.cleaned_data.get('password')
@@ -30,18 +36,19 @@ def signIn(request):
 		    if user is not None:
 			    login(request, user)
 			    messages.info(request, f"You are now logged in as {username}.")
-			    return redirect("main:homepage")
+			    return redirect("index")
 		    else:
 			    messages.error(request,"Invalid username or password.")
 	    else:
 		    messages.error(request,"Invalid username or password.")
-    form = AuthenticationForm()
-    return render(request=request, template_name="main/login.html", context={"login_form":form})
+    form = UserLoginForm()
+    context= {'form' : form}
+    return render(request, "base/signin.html", context)
 
 def signOut(request):
 	logout(request)
 	messages.info(request, "You have successfully logged out.") 
-	return redirect("main:homepage")
+	return redirect("index")
 
 
 def UserDashBoard(request):
